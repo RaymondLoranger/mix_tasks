@@ -1,21 +1,27 @@
-# MixTasks
+# Mix Tasks
 
-**TODO: Add description**
+Custom mix tasks grouping standard mix tasks.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `mix_tasks` to your list of dependencies in `mix.exs`:
+Add the `:mix_tasks` dependency to your `mix.exs` file:
 
 ```elixir
 def deps do
   [
-    {:mix_tasks, "~> 0.1.0"}
+    {:mix_tasks,
+     github: "RaymondLoranger/mix_tasks", only: :dev, runtime: false}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/mix_tasks](https://hexdocs.pm/mix_tasks).
+## Usage
 
+Clean, deps, dialyzer and hex outdated:
+- `mix cln`
+
+Format, compile, test, dialyzer and docs:
+- `mix gen`
+
+Format, compile, test, escript build, dialyzer and docs:
+- 'mix esc`
