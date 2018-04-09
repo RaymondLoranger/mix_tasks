@@ -24,4 +24,4 @@ Format, compile, test, dialyzer and docs:
 - `mix gen`
 
 Format, compile, test, escript build, dialyzer and docs:
-- 'mix esc`
+- `mix esc`
