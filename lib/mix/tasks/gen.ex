@@ -5,10 +5,14 @@ defmodule Mix.Tasks.Gen do
 
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
+    project = File.cwd!() |> Path.basename()
     unless "--no-format" in args, do: Mix.Tasks.Cmd.run(~w<mix format>)
     Mix.Tasks.Cmd.run(~w/mix compile/)
     Mix.Tasks.Cmd.run(~w/mix test/)
-    Mix.Tasks.Cmd.run(~w/mix dialyzer --no-check/)
-    Mix.Tasks.Cmd.run(~w/mix docs/)
+
+    unless project == "mix_tasks" do
+      Mix.Tasks.Cmd.run(~w/mix dialyzer --no-check/)
+      Mix.Tasks.Cmd.run(~w/mix docs/)
+    end
   end
 end
