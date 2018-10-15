@@ -9,6 +9,7 @@ defmodule Mix.Tasks.Cln do
     Mix.Tasks.Cmd.run(~w/mix clean/)
     Mix.Tasks.Cmd.run(~w/mix deps.clean --all/)
     Mix.Tasks.Cmd.run(~w/mix deps.get/)
+    Mix.Tasks.Cmd.run(~w/mix deps.update --all/)
 
     unless project == "mix_tasks" do
       Mix.Tasks.Cmd.run(~w/mix dialyzer/)
