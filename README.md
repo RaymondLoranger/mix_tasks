@@ -4,7 +4,7 @@ Custom mix tasks grouping standard mix tasks.
 
 ## Installation
 
-Add the `:mix_tasks` dependency to your `mix.exs` file:
+Add `mix_tasks` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
