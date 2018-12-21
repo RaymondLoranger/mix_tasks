@@ -16,6 +16,11 @@ defmodule Mix.Tasks.Cln do
     end
 
     Mix.Tasks.Cmd.run(~w/mix deps/)
-    Mix.Tasks.Cmd.run(~w/mix hex.outdated/)
+
+    try do
+      Mix.Tasks.Cmd.run(~w/mix hex.outdated/)
+    catch
+      :exit, _reason -> :ok
+    end
   end
 end
