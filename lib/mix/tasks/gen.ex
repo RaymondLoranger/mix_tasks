@@ -7,6 +7,8 @@ defmodule Mix.Tasks.Gen do
   def run(args) do
     project = File.cwd!() |> Path.basename()
     unless "--no-format" in args, do: Mix.Tasks.Cmd.run(~w<mix format>)
+    if "--inc" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.inc>)
+    if "--dec" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.dec>)
     Mix.Tasks.Cmd.run(~w/mix compile/)
     Mix.Tasks.Cmd.run(~w/mix test/)
 

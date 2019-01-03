@@ -6,6 +6,8 @@ defmodule Mix.Tasks.Esc do
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
     unless "--no-format" in args, do: Mix.Tasks.Cmd.run(~w<mix format>)
+    if "--inc" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.inc>)
+    if "--dec" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.dec>)
     Mix.Tasks.Cmd.run(~w/mix compile/)
     Mix.Tasks.Cmd.run(~w/mix test/)
     Mix.Tasks.Cmd.run(~w/mix escript.build/)
