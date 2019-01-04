@@ -7,13 +7,8 @@ defmodule Mix.Tasks.Gen do
   def run(args) do
     project = File.cwd!() |> Path.basename()
     unless "--no-format" in args, do: Mix.Tasks.Cmd.run(~w<mix format>)
-
-    cond do
-      "--inc" in args -> Mix.Tasks.Cmd.run(~w<mix ver.inc>)
-      "--dec" in args -> Mix.Tasks.Cmd.run(~w<mix ver.dec>)
-      true -> Mix.Tasks.Cmd.run(~w<mix ver.get>)
-    end
-
+    if "--inc" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.inc>)
+    if "--dec" in args, do: Mix.Tasks.Cmd.run(~w<mix ver.dec>)
     Mix.Tasks.Cmd.run(~w/mix compile/)
     Mix.Tasks.Cmd.run(~w/mix test/)
 
@@ -21,5 +16,7 @@ defmodule Mix.Tasks.Gen do
       Mix.Tasks.Cmd.run(~w/mix dialyzer --no-check/)
       Mix.Tasks.Cmd.run(~w/mix docs/)
     end
+
+    Mix.Tasks.Cmd.run(~w<mix ver.get>)
   end
 end
