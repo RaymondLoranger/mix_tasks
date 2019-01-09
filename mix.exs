@@ -22,7 +22,8 @@ defmodule MixTasks.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:io_ansi_table, "~> 0.4"},
+      {:map_sorter, "~> 0.2", override: true},
+      {:io_ansi_table, "~> 0.4", override: true},
       {:earmark, "~> 1.0", only: :dev},
       {:ex_doc, "~> 0.14", only: :dev, runtime: false},
       {:dialyxir, "~> 0.5", only: :dev, runtime: false}
