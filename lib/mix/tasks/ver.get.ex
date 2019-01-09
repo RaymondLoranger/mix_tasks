@@ -1,20 +1,36 @@
 defmodule Mix.Tasks.Ver.Get do
-  @shortdoc "Get version number"
-
   use Mix.Task
 
-  @spec run(OptionParser.argv()) :: :ok
+  @shortdoc "Get version number"
+
+  @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do
     content = File.read!("mix.exs")
-    [[_full, app]] = Regex.scan(~r[app: :(\w+)], content)
+    [_full, app] = Regex.run(~r|app: :(\w+)|, content)
 
-    [[_full, major, minor, patch]] =
-      Regex.scan(~r[version: "(\d+)\.(\d+)\.(\d+)"], content)
+    [_full, major, minor, patch] =
+      Regex.run(~r|version: "(\d+)\.(\d+)\.(\d+)"|, content)
 
     version = "#{major}.#{minor}.#{patch}"
 
     [:light_green, "* #{app} #{version}"]
     |> IO.ANSI.format()
     |> IO.puts()
+  end
+
+  @spec ver(Path.t()) :: String.t()
+  def ver(folder) do
+    content = File.read!("#{folder}/mix.exs")
+
+    [_full, major, minor, patch] =
+      Regex.run(~r|version: "(\d+)\.(\d+)\.(\d+)"|, content)
+
+    "#{major}.#{minor}.#{patch}"
+  end
+
+  @spec hex?(Path.t()) :: boolean
+  def hex?(folder) do
+    content = File.read!("#{folder}/mix.exs")
+    if Regex.run(~r|package: \w+|, content), do: true, else: false
   end
 end
