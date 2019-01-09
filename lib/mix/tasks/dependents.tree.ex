@@ -18,6 +18,10 @@ defmodule Mix.Tasks.Dependents.Tree do
     |> Table.format()
   end
 
+  def run([] = _args) do
+    run(["." |> Path.expand() |> Path.basename()])
+  end
+
   def run([app | _rest] = _args) do
     Table.App.start(:normal, :ok)
     app = String.to_atom(app)
