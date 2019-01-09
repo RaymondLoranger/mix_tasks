@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Cln do
-  use Mix.Task
-
   @shortdoc "Clean, deps, dialyzer and hex outdated"
+
+  use Mix.Task
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do

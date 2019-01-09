@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Ver.Get do
-  use Mix.Task
-
   @shortdoc "Get version number"
+
+  use Mix.Task
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do

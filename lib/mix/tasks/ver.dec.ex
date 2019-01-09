@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Ver.Dec do
-  use Mix.Task
-
   @shortdoc "Decrement patch version"
+
+  use Mix.Task
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do

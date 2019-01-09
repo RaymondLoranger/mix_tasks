@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Gen do
-  use Mix.Task
-
   @shortdoc "Format, compile, test, dialyzer and docs"
+
+  use Mix.Task
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(args) do
