@@ -17,20 +17,4 @@ defmodule Mix.Tasks.Ver.Get do
     |> IO.ANSI.format()
     |> IO.puts()
   end
-
-  @spec ver(Path.t()) :: String.t()
-  def ver(folder) do
-    content = File.read!("#{folder}/mix.exs")
-
-    [_full, major, minor, patch] =
-      Regex.run(~r|version: "(\d+)\.(\d+)\.(\d+)"|, content)
-
-    "#{major}.#{minor}.#{patch}"
-  end
-
-  @spec hex?(Path.t()) :: boolean
-  def hex?(folder) do
-    content = File.read!("#{folder}/mix.exs")
-    if Regex.run(~r|package: \w+|, content), do: true, else: false
-  end
 end
