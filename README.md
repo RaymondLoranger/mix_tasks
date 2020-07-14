@@ -25,3 +25,12 @@ Format, compile, test, dialyzer and docs:
 
 Format, compile, test, escript build, dialyzer and docs:
 - `mix esc`
+
+Decrement patch version:
+- `mix ver.dec`
+
+Increment patch version:
+- `mix ver.inc`
+
+Get version number:
+- `mix ver.get`

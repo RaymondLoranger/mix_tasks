@@ -4,8 +4,8 @@ defmodule MixTasks.Mixfile do
   def project do
     [
       app: :mix_tasks,
-      version: "0.2.0",
-      elixir: "~> 1.5",
+      version: "0.3.0",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       dialyzer: [plt_add_apps: [:mix]]
@@ -22,9 +22,9 @@ defmodule MixTasks.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:earmark, "~> 1.0", only: :dev},
-      {:ex_doc, "~> 0.14", only: :dev, runtime: false},
-      {:dialyxir, "~> 0.5", only: :dev, runtime: false}
+      {:earmark, "~> 1.4", only: :dev},
+      {:ex_doc, "~> 0.22", only: :dev, runtime: false},
+      {:dialyxir, "~> 1.0", only: :dev, runtime: false}
     ]
   end
 end
