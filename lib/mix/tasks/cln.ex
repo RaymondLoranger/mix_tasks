@@ -5,6 +5,12 @@ defmodule Mix.Tasks.Cln do
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do
+    try do
+      Mix.Tasks.Cmd.run(~w{rmdir /Q /S .elixir_ls})
+    catch
+      :exit, _reason -> :ok
+    end
+
     Mix.Tasks.Cmd.run(~w/mix clean/)
     Mix.Tasks.Cmd.run(~w/mix deps.clean --all/)
     Mix.Tasks.Cmd.run(~w/mix deps.unlock --all/)
