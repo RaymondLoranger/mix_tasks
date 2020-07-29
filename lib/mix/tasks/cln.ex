@@ -11,6 +11,12 @@ defmodule Mix.Tasks.Cln do
       :exit, _reason -> :ok
     end
 
+    try do
+      Mix.Tasks.Cmd.run(~w{del mix.lock})
+    catch
+      :exit, _reason -> :ok
+    end
+
     Mix.Tasks.Cmd.run(~w/mix clean/)
     Mix.Tasks.Cmd.run(~w/mix deps.clean --all/)
     Mix.Tasks.Cmd.run(~w/mix deps.unlock --all/)
