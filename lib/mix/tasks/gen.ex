@@ -15,14 +15,10 @@ defmodule Mix.Tasks.Gen do
     do_run(~w/mix deps.tree --format dot/)
     do_run(~w<mix ver.get>)
 
-    if "--inc" in args or "--replace" in args do
+    if "--inc" in args do
       do_run(~w<git add .>)
       do_run(~w<git commit -am "#{version()}">)
       do_run(~w<git push>)
-
-      if "--replace" in args,
-        do: do_run(~w<mix hex.publish --yes --replace>),
-        else: do_run(~w<mix hex.publish --yes>)
     end
   end
 
@@ -40,7 +36,7 @@ defmodule Mix.Tasks.Gen do
 
   @spec do_run([String.t()]) :: :ok
   defp do_run(cmd) do
-    IO.ANSI.format([:light_yellow, cmd]) |> IO.puts()
+    IO.ANSI.format([:light_yellow, Enum.join(cmd, " ")]) |> IO.puts()
     Mix.Tasks.Cmd.run(cmd)
   end
 end

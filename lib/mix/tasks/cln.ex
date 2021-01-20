@@ -5,18 +5,24 @@ defmodule Mix.Tasks.Cln do
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do
-    Mix.Tasks.Cmd.run(~w/mix deps.update --all/)
-    Mix.Tasks.Cmd.run(~w/mix clean/)
-    Mix.Tasks.Cmd.run(~w/mix deps.clean --all/)
-    Mix.Tasks.Cmd.run(~w/mix deps.unlock --all/)
-    Mix.Tasks.Cmd.run(~w/mix deps.get/)
-    Mix.Tasks.Cmd.run(~w/mix dialyzer/)
-    Mix.Tasks.Cmd.run(~w/mix deps/)
+    do_run(~w/mix deps.update --all/)
+    do_run(~w/mix clean/)
+    do_run(~w/mix deps.clean --all/)
+    do_run(~w/mix deps.unlock --all/)
+    do_run(~w/mix deps.get/)
+    do_run(~w/mix dialyzer/)
+    do_run(~w/mix deps/)
 
     try do
-      Mix.Tasks.Cmd.run(~w/mix hex.outdated/)
+      do_run(~w/mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end
+  end
+
+  @spec do_run([String.t()]) :: :ok
+  defp do_run(cmd) do
+    IO.ANSI.format([:light_yellow, Enum.join(cmd, " ")]) |> IO.puts()
+    Mix.Tasks.Cmd.run(cmd)
   end
 end
