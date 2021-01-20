@@ -5,6 +5,7 @@ defmodule Mix.Tasks.Cln do
 
   @spec run(command_line_args :: [binary]) :: :ok
   def run(_args) do
+    Mix.Tasks.Cmd.run(~w/mix deps.update --all/)
     Mix.Tasks.Cmd.run(~w/mix clean/)
     Mix.Tasks.Cmd.run(~w/mix deps.clean --all/)
     Mix.Tasks.Cmd.run(~w/mix deps.unlock --all/)
