@@ -20,7 +20,7 @@ defmodule Mix.Tasks.Gen do
       do_run(~w<git add .>)
       do_run(~w<git commit -am "#{version()}">)
       do_run(~w<git push>)
-      if escript?(), do: do_run(~w/mix escript.install/)
+      if escript?(), do: do_run(~w/mix escript.install --force/)
     end
   end
 
