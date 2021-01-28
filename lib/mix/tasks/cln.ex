@@ -10,7 +10,13 @@ defmodule Mix.Tasks.Cln do
     do_run(~w/mix deps.clean --all/)
     do_run(~w/mix deps.unlock --all/)
     do_run(~w/mix deps.get/)
-    do_run(~w/mix dialyzer/)
+
+    try do
+      do_run(~w/mix dialyzer/)
+    catch
+      :exit, _reason -> :ok
+    end
+
     do_run(~w/mix deps/)
 
     try do

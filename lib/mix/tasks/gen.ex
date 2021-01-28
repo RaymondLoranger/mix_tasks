@@ -11,8 +11,19 @@ defmodule Mix.Tasks.Gen do
     do_run(~w/mix compile/)
     do_run(~w/mix test/)
     if escript?(), do: do_run(~w/mix escript.build/)
-    do_run(~w/mix dialyzer --no-check/)
-    do_run(~w/mix docs/)
+
+    try do
+      do_run(~w/mix dialyzer --no-check/)
+    catch
+      :exit, _reason -> :ok
+    end
+
+    try do
+      do_run(~w/mix docs/)
+    catch
+      :exit, _reason -> :ok
+    end
+
     do_run(~w/mix deps.tree --format dot/)
     do_run(~w<mix ver.get>)
 
