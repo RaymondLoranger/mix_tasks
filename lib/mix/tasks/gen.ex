@@ -30,7 +30,13 @@ defmodule Mix.Tasks.Gen do
     if "--inc" in args do
       do_run(~w<git add .>)
       do_run(~w<git commit -am "#{version()}">)
-      do_run(~w<git push>)
+
+      try do
+        do_run(~w<git push>)
+      catch
+        :exit, _reason -> :ok
+      end
+
       if escript?(), do: do_run(~w/mix escript.install --force/)
     end
   end
