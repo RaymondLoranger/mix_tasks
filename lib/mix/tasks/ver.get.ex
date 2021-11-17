@@ -16,5 +16,7 @@ defmodule Mix.Tasks.Ver.Get do
     [:light_green, "* #{app} #{version}"]
     |> IO.ANSI.format()
     |> IO.puts()
+
+    IO.puts(Mix.Project.config()[:version])
   end
 end
