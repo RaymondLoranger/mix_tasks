@@ -4,15 +4,14 @@ Custom mix tasks grouping standard mix tasks.
 
 ## Installation
 
-Add `mix_tasks` to your list of dependencies in `mix.exs`:
+Clone `mix_tasks` and then compile and archive it:
 
-```elixir
-def deps do
-  [
-    {:mix_tasks,
-     github: "RaymondLoranger/mix_tasks", only: :dev, runtime: false}
-  ]
-end
+```
+git clone https://github.com/RaymondLoranger/mix_tasks
+cd mix_tasks
+mix deps.get
+mix compile
+mix archive.install
 ```
 
 ## Usage
@@ -20,17 +19,16 @@ end
 Clean, deps, dialyzer and hex outdated:
 - `mix cln`
 
-Format, compile, test, dialyzer and docs:
+Format, compile, test, dialyzer, docs, git push and escript:
 - `mix gen`
+- `mix gen --inc`
+- `mix gen --no-format`
 
-Format, compile, test, escript build, dialyzer and docs:
-- `mix esc`
-
-Decrement patch version:
+Decrements the app version number:
 - `mix ver.dec`
 
-Increment patch version:
+Increments the app version number:
 - `mix ver.inc`
 
-Get version number:
-- `mix ver.get`
+Prints the app version number:
+- `mix ver`

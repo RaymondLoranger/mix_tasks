@@ -1,17 +1,30 @@
 defmodule Mix.Tasks.Ver.Dec do
-  @shortdoc "Decrement patch version"
+  @moduledoc "Decrements and returns the app version."
+
+  @shortdoc "Decrements and returns the app version"
 
   use Mix.Task
 
-  @spec run(command_line_args :: [binary]) :: :ok
+  @doc """
+  Decrements and returns the app version.
+
+  ## Examples
+
+      mix ver.dec
+  """
+  @impl Mix.Task
+  @spec run(OptionParser.argv()) :: Version.t()
   def run(_args) do
-    content = File.read!("mix.exs")
+    version = Mix.Project.config()[:version] |> Version.parse!()
+    new_version = %Version{version | patch: version.patch - 1}
 
-    [full, major, minor, patch] =
-      Regex.run(~r|version: "(\d+)\.(\d+)\.(\d+)"|, content)
+    :ok =
+      File.write!(
+        "mix.exs",
+        File.read!("mix.exs")
+        |> String.replace(~s|"#{version}"|, ~s|"#{new_version}"|, global: false)
+      )
 
-    new_version = "#{major}.#{minor}.#{String.to_integer(patch) - 1}"
-    new_content = String.replace(content, full, ~s|version: "#{new_version}"|)
-    File.write!("mix.exs", new_content)
+    new_version
   end
 end

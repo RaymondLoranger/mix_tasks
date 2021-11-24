@@ -1,34 +1,49 @@
 defmodule Mix.Tasks.Cln do
+  @moduledoc """
+  - Deletes file `mix.lock` if present.
+  - Deletes folder `deps` if present.
+  - Deletes folder `_build` if present.
+  - Deletes folder `.elixir_ls` if present.
+  - Gets all dependencies.
+  - Runs dialyzer.
+  - Lists all dependencies and their status.
+  - Shows outdated Hex deps for the current project.
+  """
+
   @shortdoc "Clean, deps, dialyzer and hex outdated"
 
   use Mix.Task
 
-  @spec run(command_line_args :: [binary]) :: :ok
+  alias Mix.Tasks.Custom.Cmd
+
+  @doc """
+  Clean, deps, dialyzer and hex outdated.
+
+  ## Examples
+
+      mix cln
+  """
+  @impl Mix.Task
+  @spec run(OptionParser.argv()) :: :ok
   def run(_args) do
-    do_run(~w/mix deps.update --all/)
-    do_run(~w/mix clean/)
-    do_run(~w/mix deps.clean --all/)
-    do_run(~w/mix deps.unlock --all/)
-    do_run(~w/mix deps.get/)
+    if File.exists?("mix.lock"), do: Cmd.run(~w<del mix.lock>)
+    if File.exists?("deps/"), do: Cmd.run(~w<rmdir /Q /S deps>)
+    if File.exists?("_build/"), do: Cmd.run(~w<rmdir /Q /S _build>)
+    if File.exists?(".elixir_ls/"), do: Cmd.run(~w<rmdir /Q /S .elixir_ls>)
+    Cmd.run(~w/mix deps.get/)
 
     try do
-      do_run(~w/mix dialyzer/)
+      Cmd.run(~w/mix dialyzer/)
     catch
       :exit, _reason -> :ok
     end
 
-    do_run(~w/mix deps/)
+    Cmd.run(~w/mix deps/)
 
     try do
-      do_run(~w/mix hex.outdated/)
+      Cmd.run(~w/mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end
-  end
-
-  @spec do_run([String.t()]) :: :ok
-  defp do_run(cmd) do
-    IO.ANSI.format([:light_yellow, Enum.join(cmd, " ")]) |> IO.puts()
-    Mix.Tasks.Cmd.run(cmd)
   end
 end
