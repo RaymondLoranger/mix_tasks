@@ -24,11 +24,11 @@ Format, compile, test, dialyzer, docs, git push and escript:
 - `mix gen --inc`
 - `mix gen --no-format`
 
-Decrements the app version number:
+Decrements the app version:
 - `mix ver.dec`
 
-Increments the app version number:
+Increments the app version:
 - `mix ver.inc`
 
-Prints the app version number:
+Prints the app version:
 - `mix ver`

@@ -39,9 +39,26 @@ defmodule Mix.Tasks.Gen do
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
     escript? = !is_nil(Mix.Project.config()[:escript])
+    version = Mix.Project.config()[:version] |> Version.parse!()
+
+    version =
+      if "--inc" in args do
+        Cmd.run(~w<mix ver.inc>)
+        %Version{version | patch: version.patch + 1}
+      else
+        version
+      end
+
+    version =
+      if "--dec" in args do
+        Cmd.run(~w<mix ver.dec>)
+        %Version{version | patch: version.patch - 1}
+      else
+        version
+      end
+
     unless "--no-format" in args, do: Cmd.run(~w<mix format>)
-    if "--inc" in args, do: Cmd.run(~w<mix ver.inc>)
-    if "--dec" in args, do: Cmd.run(~w<mix ver.dec>)
+
     Cmd.run(~w/mix compile/)
     Cmd.run(~w/mix test/)
     if escript?, do: Cmd.run(~w/mix escript.build/)
@@ -59,7 +76,7 @@ defmodule Mix.Tasks.Gen do
     end
 
     Cmd.run(~w/mix deps.tree --format dot/)
-    version = Cmd.run(~w<mix ver>)
+    Cmd.run(~w<mix ver>)
 
     if "--inc" in args do
       Cmd.run(~w<git add .>)
