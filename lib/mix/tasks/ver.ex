@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Ver do
   use Mix.Task
 
   @doc """
-  Prints and returns the app version.
+  Prints the app version.
 
   ## Examples
 

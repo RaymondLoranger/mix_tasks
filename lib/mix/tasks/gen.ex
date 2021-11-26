@@ -1,22 +1,24 @@
 defmodule Mix.Tasks.Gen do
   @moduledoc """
-  - Formats the given files and patterns unless option `--no-format` specified.
   - Increments the app version number if option `--inc` specified.
   - Decrements the app version number if option `--dec` specified.
+  - Formats the given files and patterns unless option `--no-format` specified.
   - Compiles source files.
   - Runs the project's tests.
   - Builds an escript for the project if applicable.
   - Runs dialyzer.
   - Generates documentation for the project.
+  - Shows outdated Hex deps for the current project.
   - Produces a DOT graph description of the dependency tree.
-  - Prints the app version number.
+  - Prints the app version.
   - Performs a `git push` if option `--inc` specified.
   - Installs an escript locally if applicable and option `--inc` specified.
 
   ## Command line options
 
     * `--no-format` - prevents formatting the given files and patterns
-    * `--inc` - increments the app version number, performs a `git push` and installs an escript locally if applicable
+    * `--inc` - increments the app version number, performs a `git push` and
+         installs an escript locally if applicable
     * `--dec` - decrements the app version number
   """
 
@@ -71,6 +73,12 @@ defmodule Mix.Tasks.Gen do
 
     try do
       Cmd.run(~w/mix docs/)
+    catch
+      :exit, _reason -> :ok
+    end
+
+    try do
+      Cmd.run(~w/mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end
