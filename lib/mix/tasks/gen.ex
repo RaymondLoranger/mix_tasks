@@ -1,7 +1,7 @@
 defmodule Mix.Tasks.Gen do
   @moduledoc """
-  - Increments the app version number if option `--inc` specified.
-  - Decrements the app version number if option `--dec` specified.
+  - Increments the app version if option `--inc` specified.
+  - Decrements the app version if option `--dec` specified.
   - Formats the given files and patterns unless option `--no-format` specified.
   - Compiles source files.
   - Runs the project's tests.
@@ -17,9 +17,9 @@ defmodule Mix.Tasks.Gen do
   ## Command line options
 
     * `--no-format` - prevents formatting the given files and patterns
-    * `--inc` - increments the app version number, performs a `git push` and
+    * `--inc` - increments the app version, performs a `git push` and
          installs an escript locally if applicable
-    * `--dec` - decrements the app version number
+    * `--dec` - decrements the app version
   """
 
   @shortdoc "Format, compile, test, dialyzer, docs, git push and escript"
@@ -41,12 +41,12 @@ defmodule Mix.Tasks.Gen do
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
     escript? = !is_nil(Mix.Project.config()[:escript])
-    version = Mix.Project.config()[:version] |> Version.parse!()
+    %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
 
     version =
       if "--inc" in args do
         Cmd.run(~w<mix ver.inc>)
-        %Version{version | patch: version.patch + 1}
+        update_in(version.patch, &(&1 + 1))
       else
         version
       end
@@ -54,12 +54,18 @@ defmodule Mix.Tasks.Gen do
     version =
       if "--dec" in args do
         Cmd.run(~w<mix ver.dec>)
-        %Version{version | patch: version.patch - 1}
+        update_in(version.patch, &(&1 - 1))
       else
         version
       end
 
-    unless "--no-format" in args, do: Cmd.run(~w<mix format>)
+    unless "--no-format" in args do
+      try do
+        Cmd.run(~w<mix format>)
+      catch
+        :exit, _reason -> :ok
+      end
+    end
 
     Cmd.run(~w/mix compile/)
     Cmd.run(~w/mix test/)

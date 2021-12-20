@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Cln do
   - Deletes folder `.elixir_ls` if present.
   - Gets all dependencies.
   - Runs dialyzer.
-  - Lists all dependencies and their status.
+  - Lists all dependencies and their statuses.
   - Shows outdated Hex deps for the current project.
   """
 

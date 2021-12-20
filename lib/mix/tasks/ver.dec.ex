@@ -15,12 +15,13 @@ defmodule Mix.Tasks.Ver.Dec do
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
   def run(_args) do
-    version = Mix.Project.config()[:version] |> Version.parse!()
-    new_version = %Version{version | patch: version.patch - 1}
+    %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
+    new_version = update_in(version.patch, &(&1 - 1))
 
     File.write!(
       "mix.exs",
-      File.read!("mix.exs")
+      "mix.exs"
+      |> File.read!()
       |> String.replace(~s|"#{version}"|, ~s|"#{new_version}"|, global: false)
     )
   end

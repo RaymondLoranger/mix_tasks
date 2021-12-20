@@ -16,7 +16,7 @@ defmodule Mix.Tasks.Ver do
   @spec run(OptionParser.argv()) :: :ok
   def run(_args) do
     app = Mix.Project.config()[:app]
-    version = Mix.Project.config()[:version] |> Version.parse!()
+    %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
     [:light_green, "* #{app} #{version}"] |> IO.ANSI.format() |> IO.puts()
   end
 end
