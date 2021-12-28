@@ -72,7 +72,7 @@ defmodule Mix.Tasks.Gen do
     if escript?, do: Cmd.run(~w/mix escript.build/)
 
     try do
-      Cmd.run(~w/mix dialyzer --no-check/)
+      Cmd.run(~w/mix dialyzer --no-check --quiet/)
     catch
       :exit, _reason -> :ok
     end
