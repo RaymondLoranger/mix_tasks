@@ -16,6 +16,7 @@ defmodule Mix.Tasks.Gen do
 
   ## Command line options
 
+    * `--force` - forces compilation
     * `--no-format` - prevents formatting the given files and patterns
     * `--inc` - increments the app version, performs a `git push` and
          installs an escript locally if applicable
@@ -36,6 +37,7 @@ defmodule Mix.Tasks.Gen do
       mix gen
       mix gen --inc
       mix gen --no-format
+      mix gen --force
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
@@ -67,8 +69,14 @@ defmodule Mix.Tasks.Gen do
       end
     end
 
-    Cmd.run(~w/mix compile/)
-    Cmd.run(~w/mix test/)
+    if "--force" in args do
+      Cmd.run(~w/mix compile --force/)
+      Cmd.run(~w/mix test --force/)
+    else
+      Cmd.run(~w/mix compile/)
+      Cmd.run(~w/mix test/)
+    end
+
     if escript?, do: Cmd.run(~w/mix escript.build/)
 
     try do

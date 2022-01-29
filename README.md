@@ -23,6 +23,7 @@ Format, compile, test, dialyzer, docs, git push and escript:
 - `mix gen`
 - `mix gen --inc`
 - `mix gen --no-format`
+- `mix gen --force`
 
 Decrements the app version:
 - `mix ver.dec`
