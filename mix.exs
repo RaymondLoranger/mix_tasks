@@ -4,7 +4,7 @@ defmodule MixTasks.Mixfile do
   def project do
     [
       app: :mix_tasks,
-      version: "0.3.17",
+      version: "0.3.18",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),

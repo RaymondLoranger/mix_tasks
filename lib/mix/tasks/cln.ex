@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Cln do
     Cmd.run(~w/mix deps.get/)
 
     try do
-      Cmd.run(~w/mix dialyzer/)
+      Cmd.run(~w/mix dialyzer --quiet/)
     catch
       :exit, _reason -> :ok
     end

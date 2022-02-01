@@ -13,9 +13,9 @@ defmodule Mix.Tasks.Gen do
   - Prints the app version.
   - Performs a `git push` if option `--inc` specified.
   - Installs an escript locally if applicable and option `--inc` specified.
-  
+
   ## Command line options
-  
+
     * `--force` - forces compilation
     * `--no-format` - prevents formatting the given files and patterns
     * `--inc` - increments the app version, performs a `git push` and
@@ -31,9 +31,9 @@ defmodule Mix.Tasks.Gen do
 
   @doc """
   Format, compile, test, dialyzer, docs, `git push` and escript.
-  
+
   ## Examples
-  
+
       mix gen
       mix gen --inc
       mix gen --no-format
@@ -112,5 +112,7 @@ defmodule Mix.Tasks.Gen do
 
       if escript?, do: Cmd.run(~w/mix escript.install --force/)
     end
+
+    Cmd.run(~w<git branch>)
   end
 end
