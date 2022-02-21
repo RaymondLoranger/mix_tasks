@@ -43,6 +43,7 @@ defmodule Mix.Tasks.Gen do
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
     escript? = !is_nil(Mix.Project.config()[:escript])
+    docs? = :ex_doc in Mix.Project.deps_apps()
     %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
 
     version =
@@ -85,11 +86,7 @@ defmodule Mix.Tasks.Gen do
       :exit, _reason -> :ok
     end
 
-    try do
-      Cmd.run(~w/mix docs/)
-    catch
-      :exit, _reason -> :ok
-    end
+    if docs?, do: Cmd.run(~w/mix docs/)
 
     try do
       Cmd.run(~w/mix hex.outdated/)

@@ -26,6 +26,7 @@ defmodule Mix.Tasks.Cln do
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
   def run(_args) do
+    tailwind? = :tailwind in Mix.Project.deps_apps()
     if File.exists?("mix.lock"), do: Cmd.run(~w<del mix.lock>)
     if File.exists?("deps/"), do: Cmd.run(~w<rmdir /Q /S deps>)
     if File.exists?("_build/"), do: Cmd.run(~w<rmdir /Q /S _build>)
@@ -38,6 +39,7 @@ defmodule Mix.Tasks.Cln do
       :exit, _reason -> :ok
     end
 
+    if tailwind?, do: Cmd.run(~w/mix tailwind.install/)
     Cmd.run(~w/mix deps/)
 
     try do
