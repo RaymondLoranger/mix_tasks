@@ -18,9 +18,9 @@ defmodule Mix.Tasks.Cln do
 
   @doc """
   Clean, deps, dialyzer and hex outdated.
-
+  
   ## Examples
-
+  
       mix cln
   """
   @impl Mix.Task
