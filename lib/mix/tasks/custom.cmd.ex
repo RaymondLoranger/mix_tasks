@@ -17,6 +17,11 @@ defmodule Mix.Tasks.Custom.Cmd do
   @spec run(OptionParser.argv()) :: :ok
   def run(args) do
     Mix.Tasks.Echo.run(args)
-    Mix.Tasks.Cmd.run(args)
+
+    try do
+      Mix.Tasks.Cmd.run(args)
+    catch
+      :exit, _reason -> :ok
+    end
   end
 end
