@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Ver.Dec do
 
   ## Examples
 
-      mix ver.dec
+      mix ver.dec # => will decrement the app version
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok

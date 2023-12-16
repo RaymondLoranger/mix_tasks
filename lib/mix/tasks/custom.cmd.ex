@@ -10,8 +10,9 @@ defmodule Mix.Tasks.Custom.Cmd do
 
   ## Examples
 
-      mix custom.cmd ls --reverse
-      mix custom.cmd mix deps
+      mix custom.cmd git status # => will print 'git status' and run it
+      mix custom.cmd mix deps # => will print 'mix deps' and run it
+      mix custom.cmd dir # => will print 'dir' and run it
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok

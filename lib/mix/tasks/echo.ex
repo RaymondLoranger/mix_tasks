@@ -10,8 +10,8 @@ defmodule Mix.Tasks.Echo do
 
   ## Examples
 
-      mix echo ls --reverse
-      mix echo mix deps
+      mix echo git status # => will print 'git status' in light yellow
+      mix echo mix deps # => will print 'mix deps' in light yellow
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok

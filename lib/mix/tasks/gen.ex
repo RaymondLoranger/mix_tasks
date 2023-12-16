@@ -2,23 +2,24 @@ defmodule Mix.Tasks.Gen do
   @moduledoc """
   - Increments the app version if option `--inc` specified.
   - Decrements the app version if option `--dec` specified.
-  - Formats the given files and patterns unless option `--no-format` specified.
+  - Formats the configured files unless option `--no-format` specified.
   - Compiles source files.
   - Runs the project's tests.
   - Builds an escript for the project if applicable.
   - Runs dialyzer.
-  - Generates documentation for the project.
+  - Generates documentation for the project if applicable.
   - Shows outdated Hex deps for the current project.
   - Produces a DOT graph description of the dependency tree.
   - Prints the app version.
-  - Performs a `git push` if option `--inc` specified.
+  - Performs `git push` if option `--inc` specified.
   - Installs an escript locally if applicable and option `--inc` specified.
+  - Performs `git branch`
 
   ## Command line options
 
     * `--force` - forces compilation
-    * `--no-format` - prevents formatting the given files and patterns
-    * `--inc` - increments the app version, performs a `git push` and
+    * `--no-format` - prevents formatting the configured files
+    * `--inc` - increments the app version, performs `git push` and
          installs an escript locally if applicable
     * `--dec` - decrements the app version
   """

@@ -6,6 +6,7 @@ defmodule Mix.Tasks.Cln do
   - Deletes folder `.elixir_ls` if present.
   - Gets all dependencies.
   - Runs dialyzer.
+  - Installs Tailwind executable and assets if applicable.
   - Lists all dependencies and their statuses.
   - Shows outdated Hex deps for the current project.
   """
@@ -18,9 +19,9 @@ defmodule Mix.Tasks.Cln do
 
   @doc """
   Clean, deps, dialyzer and hex outdated.
-  
+
   ## Examples
-  
+
       mix cln
   """
   @impl Mix.Task

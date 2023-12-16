@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Ver do
 
   ## Examples
 
-      mix ver
+      mix ver # => will print the app version in light green as '* app 0.1.2'
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok

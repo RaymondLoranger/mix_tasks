@@ -10,7 +10,7 @@ defmodule Mix.Tasks.Ver.Inc do
 
   ## Examples
 
-      mix ver.inc
+      mix ver.inc # => will increment the app version
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
