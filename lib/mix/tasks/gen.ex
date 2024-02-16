@@ -46,6 +46,7 @@ defmodule Mix.Tasks.Gen do
     escript? = !is_nil(Mix.Project.config()[:escript])
     phoenix? = :phoenix in Mix.Project.deps_apps()
     docs? = :ex_doc in Mix.Project.deps_apps()
+    git? = File.exists?(".git/")
     %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
 
     version =
@@ -112,6 +113,6 @@ defmodule Mix.Tasks.Gen do
       if escript?, do: Cmd.run(~w/mix escript.install --force/)
     end
 
-    Cmd.run(~w<git branch>)
+    if git?, do: Cmd.run(~w<git branch>)
   end
 end
