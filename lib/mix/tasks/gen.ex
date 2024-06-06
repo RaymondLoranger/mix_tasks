@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Gen do
   - Compiles source files.
   - Runs the project's tests.
   - Builds an escript for the project if applicable.
-  - Runs dialyzer.
+  - Runs dialyzer if applicable.
   - Generates documentation for the project if applicable.
   - Shows outdated Hex deps for the current project.
   - Produces a DOT graph description of the dependency tree.
@@ -46,6 +46,7 @@ defmodule Mix.Tasks.Gen do
     escript? = !is_nil(Mix.Project.config()[:escript])
     phoenix? = :phoenix in Mix.Project.deps_apps()
     docs? = :ex_doc in Mix.Project.deps_apps()
+    dialyxir? = :dialyxir in Mix.Project.deps_apps()
     git? = File.exists?(".git/")
     %Version{} = version = Mix.Project.config()[:version] |> Version.parse!()
 
@@ -84,7 +85,7 @@ defmodule Mix.Tasks.Gen do
     if escript?, do: Cmd.run(~w/mix escript.build/)
 
     try do
-      Cmd.run(~w/mix dialyzer --no-check --quiet/)
+      if dialyxir?, do: Cmd.run(~w/mix dialyzer --no-check --quiet/)
     catch
       :exit, _reason -> :ok
     end
