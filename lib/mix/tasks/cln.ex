@@ -27,6 +27,7 @@ defmodule Mix.Tasks.Cln do
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
   def run(_args) do
+    dialyxir? = :dialyxir in Mix.Project.deps_apps()
     tailwind? = :tailwind in Mix.Project.deps_apps()
     if File.exists?("mix.lock"), do: Cmd.run(~w<del mix.lock>)
     if File.exists?("deps/"), do: Cmd.run(~w<rmdir /Q /S deps>)
@@ -35,7 +36,7 @@ defmodule Mix.Tasks.Cln do
     Cmd.run(~w/mix deps.get/)
 
     try do
-      Cmd.run(~w/mix dialyzer --quiet/)
+      if dialyxir?, do: Cmd.run(~w/mix dialyzer --quiet/)
     catch
       :exit, _reason -> :ok
     end
