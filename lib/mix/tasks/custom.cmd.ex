@@ -19,7 +19,7 @@ defmodule Mix.Tasks.Custom.Cmd do
   def run(~w<git branch> = args) do
     Mix.Tasks.Echo.run(args)
     [bef, aft] = :os.cmd(~c"git branch") |> to_string() |> String.split("*")
-    [bef, "*", :green, aft] |> IO.ANSI.format() |> IO.write()
+    [bef, "*", :light_green, aft] |> IO.ANSI.format() |> IO.write()
   end
 
   def run(args) do
