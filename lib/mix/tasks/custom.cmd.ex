@@ -16,6 +16,12 @@ defmodule Mix.Tasks.Custom.Cmd do
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
+  def run(~w<git branch> = args) do
+    Mix.Tasks.Echo.run(args)
+    [bef, aft] = :os.cmd(~c"git branch") |> to_string() |> String.split("*")
+    [bef, "*", :green, aft] |> IO.ANSI.format() |> IO.puts()
+  end
+
   def run(args) do
     Mix.Tasks.Echo.run(args)
 
