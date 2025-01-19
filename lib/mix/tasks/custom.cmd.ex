@@ -12,14 +12,19 @@ defmodule Mix.Tasks.Custom.Cmd do
 
       mix custom.cmd git status # => will print 'git status' and run it
       mix custom.cmd mix deps # => will print 'mix deps' and run it
-      mix custom.cmd dir # => will print 'dir' and run it
+      mix custom.cmd echo Hi # => will print 'echo Hi' and run it
+      mix custom.cmd hostname # => will print 'hostname' and run it
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
   def run(~w<git branch> = args) do
     Mix.Tasks.Echo.run(args)
-    [bef, aft] = :os.cmd(~c"git branch") |> to_string() |> String.split("*")
-    [bef, "*", :light_green, aft] |> IO.ANSI.format() |> IO.write()
+    [bef, aft] = "#{:os.cmd(~c"git branch")}" |> String.split("*")
+    [cur, etc] = String.split(aft, "\n", parts: 2)
+
+    [bef, ["*", :light_green, cur, :reset, "\n"], etc]
+    |> IO.ANSI.format()
+    |> IO.write()
   end
 
   def run(args) do
