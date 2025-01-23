@@ -68,21 +68,21 @@ defmodule Mix.Tasks.Gen do
 
     unless "--no-format" in args do
       try do
-        Cmd.run(~w<mix format>)
+        Cmd.run(~w<elixir --color -S mix format>)
       catch
         :exit, _reason -> :ok
       end
     end
 
     if "--force" in args do
-      Cmd.run(~w/mix compile --force/)
+      Cmd.run(~w/elixir --color -S mix compile --force/)
       Cmd.run(~w/elixir --color -S mix test --force/)
     else
-      Cmd.run(~w/mix compile/)
+      Cmd.run(~w/elixir --color -S mix compile/)
       Cmd.run(~w/elixir --color -S mix test/)
     end
 
-    if escript?, do: Cmd.run(~w/mix escript.build/)
+    if escript?, do: Cmd.run(~w/elixir --color -S mix escript.build/)
 
     try do
       if dialyxir?,
@@ -91,7 +91,7 @@ defmodule Mix.Tasks.Gen do
       :exit, _reason -> :ok
     end
 
-    if docs?, do: Cmd.run(~w/mix docs/)
+    if docs?, do: Cmd.run(~w/elixir --color -S mix docs/)
 
     try do
       unless phoenix?, do: Cmd.run(~w/elixir --color -S mix hex.outdated/)
@@ -112,7 +112,8 @@ defmodule Mix.Tasks.Gen do
         :exit, _reason -> :ok
       end
 
-      if escript?, do: Cmd.run(~w/mix escript.install --force/)
+      if escript?,
+        do: Cmd.run(~w/elixir --color -S mix escript.install --force/)
     end
 
     if git?, do: Cmd.run(~w<git branch>)
