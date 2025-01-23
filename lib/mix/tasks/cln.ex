@@ -45,7 +45,7 @@ defmodule Mix.Tasks.Cln do
     Cmd.run(~w/mix deps/)
 
     try do
-      Cmd.run(~w/mix hex.outdated/)
+      Cmd.run(~w/elixir --color -S mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end

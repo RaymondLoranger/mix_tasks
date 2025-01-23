@@ -76,10 +76,10 @@ defmodule Mix.Tasks.Gen do
 
     if "--force" in args do
       Cmd.run(~w/mix compile --force/)
-      Cmd.run(~w/mix test --force/)
+      Cmd.run(~w/elixir --color -S mix test --force/)
     else
       Cmd.run(~w/mix compile/)
-      Cmd.run(~w/mix test/)
+      Cmd.run(~w/elixir --color -S mix test/)
     end
 
     if escript?, do: Cmd.run(~w/mix escript.build/)
@@ -93,13 +93,13 @@ defmodule Mix.Tasks.Gen do
     if docs?, do: Cmd.run(~w/mix docs/)
 
     try do
-      unless phoenix?, do: Cmd.run(~w/mix hex.outdated/)
+      unless phoenix?, do: Cmd.run(~w/elixir --color -S mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end
 
     Cmd.run(~w/mix deps.tree --format dot/)
-    Cmd.run(~w<mix ver>)
+    Cmd.run(~w<elixir --color -S mix ver>)
 
     if "--inc" in args do
       Cmd.run(~w<git add .>)
