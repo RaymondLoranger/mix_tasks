@@ -99,7 +99,7 @@ defmodule Mix.Tasks.Gen do
       :exit, _reason -> :ok
     end
 
-    Cmd.run(~w/mix deps.tree --format dot/)
+    Cmd.run(~w/elixir --color -S mix deps.tree --format dot/)
     Cmd.run(~w<elixir --color -S mix ver>)
 
     if "--inc" in args do

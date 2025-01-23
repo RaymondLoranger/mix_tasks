@@ -15,6 +15,8 @@ defmodule Mix.Tasks.Echo do
   """
   @impl Mix.Task
   @spec run(OptionParser.argv()) :: :ok
+  def run(["elixir", "--color", "-S", args]), do: run(args)
+
   def run(args) do
     [:light_yellow, Enum.join(args, " ")] |> IO.ANSI.format() |> IO.puts()
   end

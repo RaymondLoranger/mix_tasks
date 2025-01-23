@@ -33,7 +33,7 @@ defmodule Mix.Tasks.Cln do
     if File.exists?("deps/"), do: Cmd.run(~w<rmdir /Q /S deps>)
     if File.exists?("_build/"), do: Cmd.run(~w<rmdir /Q /S _build>)
     if File.exists?(".elixir_ls/"), do: Cmd.run(~w<rmdir /Q /S .elixir_ls>)
-    Cmd.run(~w/mix deps.get/)
+    Cmd.run(~w/elixir --color -S mix deps.get/)
 
     try do
       if dialyxir?, do: Cmd.run(~w/elixir --color -S mix dialyzer --quiet/)
@@ -41,8 +41,8 @@ defmodule Mix.Tasks.Cln do
       :exit, _reason -> :ok
     end
 
-    if tailwind?, do: Cmd.run(~w/mix tailwind.install/)
-    Cmd.run(~w/mix deps/)
+    if tailwind?, do: Cmd.run(~w/elixir --color -S mix tailwind.install/)
+    Cmd.run(~w/elixir --color -S mix deps/)
 
     try do
       Cmd.run(~w/elixir --color -S mix hex.outdated/)
