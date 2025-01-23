@@ -36,7 +36,7 @@ defmodule Mix.Tasks.Cln do
     Cmd.run(~w/mix deps.get/)
 
     try do
-      if dialyxir?, do: Cmd.run(~w/mix dialyzer --quiet/)
+      if dialyxir?, do: Cmd.run(~w/elixir --color -S mix dialyzer --quiet/)
     catch
       :exit, _reason -> :ok
     end
