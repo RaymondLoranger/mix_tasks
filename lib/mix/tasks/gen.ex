@@ -66,7 +66,7 @@ defmodule Mix.Tasks.Gen do
         version
       end
 
-    unless "--no-format" in args do
+    if "--no-format" not in args do
       try do
         Cmd.run(~w<elixir --color -S mix format>)
       catch
@@ -94,7 +94,7 @@ defmodule Mix.Tasks.Gen do
     if docs?, do: Cmd.run(~w/elixir --color -S mix docs/)
 
     try do
-      unless phoenix?, do: Cmd.run(~w/elixir --color -S mix hex.outdated/)
+      if !phoenix?, do: Cmd.run(~w/elixir --color -S mix hex.outdated/)
     catch
       :exit, _reason -> :ok
     end
