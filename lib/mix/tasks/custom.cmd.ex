@@ -5,6 +5,21 @@ defmodule Mix.Tasks.Custom.Cmd do
 
   use Mix.Task
 
+  defmacrop run_cmd(args) do
+    case :os.type() do
+      {:win32, :nt} ->
+        # See `System.cmd/3` for an explanation...
+        quote bind_quoted: [args: args] do
+          Mix.Tasks.Cmd.run(["cmd", "/c" | args])
+        end
+
+      _not_windows ->
+        quote bind_quoted: [args: args] do
+          Mix.Tasks.Cmd.run(args)
+        end
+    end
+  end
+
   @doc """
   Echoes and executes the given command.
 
@@ -53,7 +68,7 @@ defmodule Mix.Tasks.Custom.Cmd do
     Mix.Tasks.Echo.run(args)
 
     try do
-      Mix.Tasks.Cmd.run(args)
+      run_cmd(args)
     catch
       :exit, _reason -> :ok
     end
