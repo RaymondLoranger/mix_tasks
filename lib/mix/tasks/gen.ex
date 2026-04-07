@@ -116,6 +116,6 @@ defmodule Mix.Tasks.Gen do
         do: Cmd.run(~w/elixir --color -S mix escript.install --force/)
     end
 
-    if git?, do: Cmd.run(~w<git branch>)
+    if git?, do: Cmd.run(~w<git branch>), else: :ok
   end
 end
